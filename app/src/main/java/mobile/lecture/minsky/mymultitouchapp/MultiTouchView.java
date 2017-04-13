@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -49,9 +50,12 @@ public class MultiTouchView extends View {
                 break;
 
             case MotionEvent.ACTION_MOVE:
-            case MotionEvent.ACTION_POINTER_INDEX_MASK:
-                x[id] = (int) event.getX(index);
-                y[id] = (int) event.getY(index);
+                int num_pt = event.getPointerCount();
+                for(int i = 0; i < num_pt; i++) {
+                    id = event.getPointerId(i);
+                    x[id] = (int) event.getX(i);
+                    y[id] = (int) event.getY(i);
+                }
                 break;
 
             case MotionEvent.ACTION_UP:
